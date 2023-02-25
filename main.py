@@ -1,39 +1,45 @@
 "included modules"
-from fastapi import FastAPI
-from models import SensorDb, SensorEntry
+from datetime import datetime
+from typing import Optional
+from fastapi import FastAPI, APIRouter, status, HTTPException
+from methodes import get_list_sensor, create_sensor_entry
+from models import NewEntry, SensorDb
 
 app = FastAPI()
 
+router = APIRouter(prefix="/api")
 
-@app.get("/")
-def read_root():
-    "hello"
-    return {"Hello": "World"}
+@router.get("/sensors")
+def get_sensors():
+    "This method return all sensors"
+    return get_list_sensor()
 
-@app.get("//hostname/api/sensors")
-def get_coppancy():
-    "This method return all occupancy"
-    return SensorDb
+@router.post("/webhook", status_code=status.HTTP_201_CREATED)
+async def create_user(payload: NewEntry) -> NewEntry:
+    "create sensor entry in database"
+    return create_sensor_entry(payload)
+
+@router.get("/sensors/{sensor_id}/occupancy")
+async def get_sensor_occupancy(sensor_id: str, atInstant: Optional[datetime] = None):  # pylint: disable=invalid-name
+    "get number of people in room"
+    return calculate_people_inside(sensor_id, atInstant)
 
 
-@app.post("/")
-async def create_user(sensor : SensorEntry) -> str:
-    "insert user une database"
-    SensorDb[sensor.id] = sensor
-    return sensor.id
-
-@app.get("/api/sensors/{sensor_id}/occupancy")
-async def get_sensor_occupancy(sensor_id: str):
-    "retrieved a sensor"
-    sensor = SensorDb[sensor_id]
+def calculate_people_inside(sensor_id: str, at_instant: Optional[datetime] = None):
+    "return the number of people in the room"
+    if sensor_id not in SensorDb:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Sensor id '{sensor_id}' not found"
+        )
+    room_list = SensorDb[sensor_id]
+    if at_instant is None:
+        sensor_list = room_list
+    else:
+        sensor_list = [x for x in room_list if x.ts <= at_instant]
     return {
-        "sensor" :sensor.id,
-        "inside" :sensor.inCount
+        "sensor": sensor_id,
+        "inside": sum(x.in_count - x.out_count for x in sensor_list)
     }
 
-@app.get("/sensors/{sensor_id}/{atInstant}")
-async def get_nb_occupancy(sensor_id: str, atInstant:str):
-    "retrieved a sensor"
-    # sensor = SensorDb[sensor_id]
-    return "occccuuupation"
-    
+
+app.include_router(router)
