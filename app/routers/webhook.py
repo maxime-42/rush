@@ -11,6 +11,8 @@ def create_sensor_entry(payload:NewEntry)->NewEntry:
     "insert new enty into database"
     new_sensor = SensorEntry(ts=payload.ts,
                             in_count = payload.in_count, out_count = payload.out)
+    assert new_sensor.ts.tzinfo is not None
+
     sensor_name:str = payload.sensor
     if sensor_name in SensorDb:
         SensorDb[sensor_name].append(new_sensor)
