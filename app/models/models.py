@@ -3,7 +3,6 @@ from datetime import datetime
 from pydantic import BaseModel # pylint: disable=no-name-in-module
 from pydantic import Field # pylint: disable=no-name-in-module
 
-
 class SensorEntry(BaseModel):
     "Sensor Entry object "
     ts: datetime

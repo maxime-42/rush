@@ -1,17 +1,12 @@
 "methods"
 from datetime import datetime
 from typing import Optional
-from fastapi import HTTPException, status
-from models import SensorDb, NewEntry, SensorEntry
+from fastapi import HTTPException, status, APIRouter
+from app.models.models import SensorDb, NewEntry, SensorEntry
 
-def get_list_sensor() -> {str,list[str]}: # type: ignore
-    "return list of knew sensor"
-    sensor_list : list[str] = []
-    for item in SensorDb:
-        sensor_list.append(item)
-    return {"sensor" : sensor_list}
+router = APIRouter(prefix="/api")
 
-
+@router.post("/webhook", status_code=status.HTTP_201_CREATED)
 def create_sensor_entry(payload:NewEntry)->NewEntry:
     "insert new enty into database"
     new_sensor = SensorEntry(ts=payload.ts,
@@ -23,7 +18,7 @@ def create_sensor_entry(payload:NewEntry)->NewEntry:
         SensorDb[sensor_name] = [new_sensor]
     return payload
 
-
+@router.get("/sensors/{sensor_id}/occupancy")
 def calculate_people_inside(sensor_id: str, at_instant: Optional[datetime] = None):
     "return the number of people in the room"
     if sensor_id not in SensorDb:
