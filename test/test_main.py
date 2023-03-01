@@ -1,18 +1,13 @@
 """include"""
-from fastapi import FastAPI
+from fastapi import status
 from fastapi.testclient import TestClient
+from main import app
 
-app = FastAPI()
 
-@app.get("/")
-async def read_main():
-    """test"""
-    return {"msg": "Hello World"}
-
+client = TestClient(app)
 
 def test_read_main():
     """test"""
-    client = TestClient(app)
     response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"msg": "Hello World"}
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == {"msg": "Hello"}
