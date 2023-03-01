@@ -2,7 +2,7 @@
 from datetime import datetime
 from typing import Optional
 from fastapi import HTTPException, status, APIRouter
-from app.models.models import SensorDb, NewEntry, SensorEntry
+from app.models.models import fake_db, NewEntry, SensorEntry
 
 router = APIRouter(prefix="/api")
 
@@ -14,20 +14,20 @@ def create_sensor_entry(payload:NewEntry)->NewEntry:
     assert new_sensor.ts.tzinfo is not None
 
     sensor_name:str = payload.sensor
-    if sensor_name in SensorDb:
-        SensorDb[sensor_name].append(new_sensor)
+    if sensor_name in fake_db:
+        fake_db[sensor_name].append(new_sensor)
     else:
-        SensorDb[sensor_name] = [new_sensor]
+        fake_db[sensor_name] = [new_sensor]
     return payload
 
 @router.get("/sensors/{sensor_id}/occupancy")
 def calculate_people_inside(sensor_id: str, at_instant: Optional[datetime] = None):
     "return the number of people in the room"
-    if sensor_id not in SensorDb:
+    if sensor_id not in fake_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Sensor id '{sensor_id}' not found"
         )
-    room_list = SensorDb[sensor_id]
+    room_list = fake_db[sensor_id]
     if at_instant is None:
         sensor_list = room_list
     else:
