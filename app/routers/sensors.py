@@ -2,7 +2,7 @@
 from typing import Dict, Optional
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, status
-from app.models.models import fake_db
+from app.models.shape_data import fake_db
 
 router = APIRouter(prefix="/sensors")
 
@@ -17,6 +17,7 @@ def get_list_sensor() -> Dict[str,list[str]]:
 @router.get("/{sensor_id}/occupancy")
 def calculate_people_inside(sensor_id: str, at_instant: Optional[datetime] = None):
     "return the number of people in the room"
+
     if sensor_id not in fake_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Sensor id '{sensor_id}' not found"

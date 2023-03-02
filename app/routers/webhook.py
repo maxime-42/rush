@@ -1,6 +1,6 @@
 "methods"
 from fastapi import status, APIRouter
-from app.models.models import fake_db, NewEntry, SensorEntry
+from app.models.shape_data import fake_db, NewEntry, SensorEntry
 
 router = APIRouter()
 
