@@ -7,9 +7,9 @@ app = FastAPI()
 router_base = APIRouter(prefix="/api")
 
 @router_base.get("/")
-async def read_main():
+async def hello_world():
     """test"""
-    return {"msg": "Hello"}
+    return {"msg": "Hello world"}
 
 router_base.include_router(sensors.router)
 router_base.include_router(webhook.router)

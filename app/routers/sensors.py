@@ -2,7 +2,6 @@
 from typing import Dict, Optional
 from datetime import datetime
 from fastapi import APIRouter
-# from app.models.shape_data import fake_db
 from app.service.service_sensors import get_list_sensor, calculate_people_inside
 router = APIRouter(prefix="/sensors")
 

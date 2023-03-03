@@ -3,9 +3,10 @@ from fastapi import status
 from fastapi.testclient import TestClient
 from main import app
 
+
 client = TestClient(app)
 
-def test_read_main():
+def test_hello_world():
     """test"""
     response = client.get("/api")
     assert response.status_code == status.HTTP_200_OK
