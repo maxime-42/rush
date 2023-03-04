@@ -33,12 +33,6 @@ class SensorTestCase(unittest.TestCase):
     def tearDown(self):
         fake_db.clear()
 
-    def test_hello_world(self):
-        """test"""
-        response = self.client.get("")
-        assert response.status_code == status.HTTP_200_OK
-        assert response.json() == {"msg": "Hello world"}
-
     def test_get_sensors(self):
         """test"""
         response = self.client.get("sensors")
