@@ -1,3 +1,3 @@
 # test_tech
 
-![alt](Diagramme sans nom.drawio.png)
+![alt](/Diagramme sans nom.drawio.png)
