@@ -1,3 +1,3 @@
 # test_tech
 
-![alt](/Diagramme sans nom.drawio.png)
+![alt](https://github.com/maxime-42/test_tech/blob/master/Diagramme%20sans%20nom.drawio.png)
