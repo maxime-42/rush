@@ -1,7 +1,7 @@
 """unitest file"""
 import unittest
 from datetime import datetime
-from app.models.shape_data import fake_db, SensorEntry, NewEntry
+from app.models.basemodel import fake_db, SensorEntry, NewEntry
 from app.service.service_sensors import calculate_people_inside, get_list_sensor
 from app.service.service_webhook import create_sensor_entry
 
@@ -31,7 +31,7 @@ class SensorTestCase(unittest.TestCase):
 
     def test_calculate_people_inside(self):
         """test people inside room"""
-        self.assertEqual(calculate_people_inside("a")['inside'], 8)
+        self.assertEqual(calculate_people_inside("a")['inside'] , 8, "There are 8 people")
         self.assertEqual(calculate_people_inside("b")['inside'], 13)
         self.assertEqual(
             calculate_people_inside("c",

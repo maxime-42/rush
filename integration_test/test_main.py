@@ -3,7 +3,7 @@ import unittest
 from datetime import datetime
 from fastapi import status
 from fastapi.testclient import TestClient
-from app.models.shape_data import fake_db, SensorEntry
+from app.models.basemodel import fake_db, SensorEntry
 from main import app
 
 

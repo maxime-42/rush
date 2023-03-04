@@ -2,7 +2,7 @@
 from typing import Dict, Optional
 from datetime import datetime
 from fastapi import HTTPException, status
-from app.models.shape_data import fake_db
+from app.models.basemodel import fake_db
 
 def get_list_sensor() -> Dict[str,list[str]]:
     """return list of knew sensor"""
