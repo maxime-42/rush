@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  sensor_api:
+    build: .
+    image: sensor_api
+    volumes:
+      - ./:/app
+    ports:
+      - 8000:8000
+    command: sh -c 'pip install -r requirements.txt && (uvicorn main:app --host 0.0.0.0 --port 8000 --reload &) && pytest-watch'
