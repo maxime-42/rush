@@ -2,7 +2,7 @@
 import unittest
 from datetime import datetime
 from app.models.basemodel import fake_db, SensorEntry, NewEntry
-from app.service.service_sensors import calculate_people_inside, get_list_sensor
+from app.service.service_peopleCounter import calculate_people_inside, get_list_sensor
 from app.service.service_webhook import create_sensor_entry
 
 
