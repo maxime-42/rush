@@ -5,6 +5,7 @@
  
  ##Purpose
 [Subject](https://github.com/maxime-42/rush/blob/master/Occupancy_back-end%20(1).pdf)
-
+<br>
 ##Fake data base
 ![alt](https://github.com/maxime-42/test_tech/blob/master/fake_db.png)
+<br>
