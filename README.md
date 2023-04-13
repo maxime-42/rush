@@ -1,4 +1,3 @@
-# test_tech
 
 ## To run the api use this command line : docker-compose up --build
 ## To shutdown use this command line :    docker-compose down
